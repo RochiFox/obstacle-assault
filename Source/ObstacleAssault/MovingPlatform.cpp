@@ -27,7 +27,7 @@ void AMovingPlatform::Tick(float DeltaTime)
 
 	// Add vector to that location
 	CurrentLocation = CurrentLocation + PlatformVelocity * DeltaTime;
-	
+
 	// Set the location
 	SetActorLocation(CurrentLocation);
 
@@ -35,8 +35,14 @@ void AMovingPlatform::Tick(float DeltaTime)
 	float PlatformDistance = FVector::Dist(StartLocation, CurrentLocation);
 
 	// Reverse the direction when platform gone too far
-	if (PlatformDistance > MoveDistance) {
+	if (PlatformDistance > MoveDistance)
+	{
+		// Find a distance
+		FVector MoveDirection = PlatformVelocity.GetSafeNormal();
+		StartLocation = StartLocation + MoveDirection * MoveDistance;
+		SetActorLocation(StartLocation);
+
+		// Return platform back
 		PlatformVelocity = -PlatformVelocity;
-		StartLocation = CurrentLocation;
 	}
 }
