@@ -37,6 +37,11 @@ void AMovingPlatform::Tick(float DeltaTime)
 	// Reverse the direction when platform gone too far
 	if (PlatformDistance > MoveDistance)
 	{
+		FString Tick = GetName();
+		float OverShoot = PlatformDistance - MoveDistance;
+
+		UE_LOG(LogTemp, Display, TEXT("Over shoot: %s %f"), *Tick, OverShoot);
+
 		// Find a distance
 		FVector MoveDirection = PlatformVelocity.GetSafeNormal();
 		StartLocation = StartLocation + MoveDirection * MoveDistance;
